@@ -3,29 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>Menu Display</title>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <!-- 결과를 표시할 위치 -->
+    <div id="menuResultContainer"></div>
 
-    <!-- 자바스크립트 코드 추가 -->
+    <!-- 자바스크립트 코드 -->
     <script>
-        // 매일 아침 10시마다 실행되는 함수
-        function updateText() {
-            var currentDate = new Date();
-            var currentHour = currentDate.getHours();
+        // API 엔드포인트 URL
+        const api_url = "https://open.neis.go.kr/hub/mealServiceDietInfo";
 
-            if (currentHour === 10) {
-                // 아침 10시일 때 실행할 코드
-                document.querySelector('h1').innerText = '안녕하세요!';
-            }
-        }
+        // 필요한 파라미터 설정
+        const params = {
+            'ATPT_OFCDC_SC_CODE': 'Q10',
+            'SD_SCHUL_CODE': '8490058',
+            'MMEAL_SC_CODE': '1',
+            'MLSV_YMD': '20231208',
+        };
 
-        // 페이지 로드 시 자동 실행
-        updateText();
+        // API 요청 보내기
+        fetch(`${api_url}?${new URLSearchParams(params)}`)
+            .then(response => response.text())
+            .then(full_text => {
+                // 줄 단위로 나누기
+                const lines = full_text.split('\n');
 
-        // 매 시간마다 updateText 함수 실행
-        setInterval(updateText, 3600000); // 1시간(3600000 밀리초)마다 실행
+                // 5번째 줄 출력
+                const lunch_menu = lines[19];
+
+                // 필요없는 것들 제거
+                const removeNumbers = /[0-9]/g;
+                const removeSpecial = /[<>!().[\]/]/g;
+                let cleanThings = lunch_menu.replace(removeNumbers, '').replace(removeSpecial, '');
+                cleanThings = cleanThings.replace('/DDISH_NM', '');
+                cleanThings = cleanThings.replace('DDISH_NM', '');
+                cleanThings = cleanThings.replace('CDATA', '');
+                cleanThings = cleanThings.replace('br/', '\n');
+                cleanThings = cleanThings.replace('/', ' + ');
+
+                const menuResult = cleanThings.substring(4);
+                
+                // 결과를 HTML에 표시
+                const menuResultContainer = document.getElementById('menuResultContainer');
+                menuResultContainer.innerText = menuResult;
+            })
+            .catch(error => console.error(error));
     </script>
 </body>
 </html>
