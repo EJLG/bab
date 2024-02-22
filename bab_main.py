@@ -38,7 +38,6 @@ clean_things = clean_things.replace('CDATA','')
 clean_things = clean_things.replace('br/','\n')
 clean_things = clean_things.replace('/',' + ')
 
-menu_result = clean_things.translate(remove_special)
 menu_result = menu_result[4:]
 # 결과 출력
 print(menu_result)
