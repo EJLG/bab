@@ -37,10 +37,10 @@
                 const removeSpecial = /[<>!().[\]/]/g;
                 let cleanThings = lunch_menu.replace(removeNumbers, '').replace(removeSpecial, '');
                 cleanThings = cleanThings.replace('br', '\n');
+                cleanThings = cleanThings.replace('/', ' + ');
                 cleanThings = cleanThings.replace('/\/DDISH_NM/', '');
                 cleanThings = cleanThings.replace('DDISH_NM', '');
                 cleanThings = cleanThings.replace('CDATA', '');
-                cleanThings = cleanThings.replace('/', ' + ');
 
                 const menuResult = cleanThings.substring(4);
                 
