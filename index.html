@@ -33,14 +33,14 @@
                 const lunch_menu = lines[19];
 
                 // 필요없는 것들 제거
-                // const removeNumbers = /[0-9]/g;
-                // const removeSpecial = /[<>!().[\]/]/g;
-                // let cleanThings = lunch_menu.replace(removeNumbers, '').replace(removeSpecial, '');
+                const removeNumbers = /[0-9]/g;
+                const removeSpecial = /[<>!().[\]/]/g;
+                let cleanThings = lunch_menu.replace(removeNumbers, '').replace(removeSpecial, '');
                 cleanThings = cleanThings.replace('br', '\n');
-                // cleanThings = cleanThings.replace('/\/DDISH_NM/', '');
-                // cleanThings = cleanThings.replace('DDISH_NM', '');
-                // cleanThings = cleanThings.replace('CDATA', '');
-                // cleanThings = cleanThings.replace('/', ' + ');
+                cleanThings = cleanThings.replace('/\/DDISH_NM/', '');
+                cleanThings = cleanThings.replace('DDISH_NM', '');
+                cleanThings = cleanThings.replace('CDATA', '');
+                cleanThings = cleanThings.replace('/', ' + ');
 
                 const menuResult = cleanThings.substring(4);
                 
